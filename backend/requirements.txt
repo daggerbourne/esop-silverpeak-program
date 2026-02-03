@@ -4,4 +4,4 @@ pydantic
 requests
 jsonify
 dotenv
-requests
+typing

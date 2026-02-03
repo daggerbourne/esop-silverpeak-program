@@ -22,6 +22,7 @@ load_dotenv()
 SRV_ADDRESS = os.getenv("SRV_ADDRESS")
 API_KEY = os.getenv("API_KEY")
 
+
 if not SRV_ADDRESS or not API_KEY:
     raise RuntimeError("Missing SRV_ADDRESS or API_KEY in .env")
 
@@ -72,6 +73,7 @@ def fetch_clients() -> Dict[str, Lease]:
             "Accept": "application/json",
         },
         timeout=10,
+        verify=False  # Disable SSL verification
     )
     resp.raise_for_status()
 

@@ -1,15 +1,17 @@
 import React from 'react';
 import './App.css';
-import FruitList from './components/Fruits';
+//import FruitList from './components/Fruits';
+import Clients from './components/Clients';
+
 
 const App = () => {
   return (
     <div className="App">
       <header className="App-header">
-        <h1>Fruit Management App</h1>
+        <h1>DHCP Client Viewer App</h1>
       </header>
       <main>
-        <FruitList />
+        <Clients />
       </main>
     </div>
   );

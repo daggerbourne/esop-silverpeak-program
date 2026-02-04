@@ -7,21 +7,15 @@ from dotenv import load_dotenv
 import os
 from pydantic import Field
 import requests
+import urllib3
+
+# Disable SSL warnings for internal API calls (configure SSL properly for production)
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 from database import init_db
 from routers import auth, user
 from auth.auth_handler import get_current_active_user
 from models import User
-
-# TODO:
-# refresh apppliance list on startup
-#       grab id, nePK, site (name)
-# display appliance list
-# user selects appliance(s)
-# get dhcp leases for appliance(s)
-
-# display by client-hostname if available, else by ip
-
 
 load_dotenv()
 BASE_API_URL = os.getenv("BASE_API_URL")
@@ -71,11 +65,8 @@ app = FastAPI(debug=True)
 # Initialize database and create default admin
 init_db()
 
-origins = [
-    "http://localhost:5173",
-    "http://localhost:5174"
-    # frontend URLs can be added here
-]
+# CORS origins - add production URLs via CORS_ORIGINS env var
+origins = os.getenv("CORS_ORIGINS", "http://localhost:5173,http://localhost:5174").split(",")
 
 app.add_middleware(
     CORSMiddleware,
@@ -123,4 +114,6 @@ def get_clients(
     return Clients(clients=data)
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="127.0.0.1", port=8000)
+    host = os.getenv("HOST", "127.0.0.1")
+    port = int(os.getenv("PORT", "8000"))
+    uvicorn.run(app, host=host, port=port)

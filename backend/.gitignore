@@ -34,5 +34,3 @@ wheels/
 *.egg-info/
 .installed.cfg
 *.egg
-
-copilot-instructions.md

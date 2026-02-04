@@ -4,9 +4,13 @@ from sqlalchemy.orm import sessionmaker, Session
 from models import Base, User, UserRole
 import os
 
-DATABASE_URL = "sqlite:///./esop.db"
+# Allow database path to be configured via environment variable for Docker
+DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./esop.db")
 
-engine = create_engine(DATABASE_URL, connect_args={"check_same_thread": False})
+engine = create_engine(
+    DATABASE_URL, 
+    connect_args={"check_same_thread": False} if DATABASE_URL.startswith("sqlite") else {}
+)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 

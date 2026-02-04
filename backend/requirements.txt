@@ -1,7 +1,11 @@
 fastapi
 uvicorn
 pydantic
+pydantic[email]
 requests
-jsonify
-dotenv
-typing
+python-dotenv
+python-jose[cryptography]
+bcrypt==4.0.1
+passlib==1.7.4
+python-multipart
+sqlalchemy

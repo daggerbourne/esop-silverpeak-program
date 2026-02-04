@@ -1,6 +1,10 @@
 # Environment variables
 .env
 
+# Database files
+*.db
+*.db-journal
+
 # Python virtual environments
 venv/
 .venv/

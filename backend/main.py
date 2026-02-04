@@ -1,5 +1,5 @@
 import uvicorn
-from fastapi import FastAPI, Query
+from fastapi import FastAPI, Query, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import List, Dict, Optional
@@ -7,6 +7,11 @@ from dotenv import load_dotenv
 import os
 from pydantic import Field
 import requests
+
+from database import init_db
+from routers import auth, user
+from auth.auth_handler import get_current_active_user
+from models import User
 
 # TODO:
 # refresh apppliance list on startup
@@ -63,6 +68,9 @@ class Clients(BaseModel):
 # FastAPI app setup
 app = FastAPI(debug=True)
 
+# Initialize database and create default admin
+init_db()
+
 origins = [
     "http://localhost:5173",
     "http://localhost:5174"
@@ -76,6 +84,10 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Include routers
+app.include_router(auth.router, prefix="/auth", tags=["auth"])
+app.include_router(user.router, tags=["users"])
 
 # Fetch DHCP leases from Silver Peak API - Helper function  
 def make_api_request(url: str) -> dict:
@@ -94,15 +106,18 @@ def make_api_request(url: str) -> dict:
 
 # API Endpoints
 @app.get("/appliances", response_model=List[Appliance])
-def get_appliances():
-    """Fetch all appliances from SilverPeak"""
+def get_appliances(current_user: User = Depends(get_current_active_user)):
+    """Fetch all appliances from SilverPeak (requires authentication)"""
     url = f"{BASE_API_URL}/appliance"
     data = make_api_request(url)
     return data
 
 @app.get("/clients", response_model=Clients)
-def get_clients(nePk: str = Query(..., description="Network element primary key")):
-    """Fetch DHCP clients for a specific appliance"""
+def get_clients(
+    nePk: str = Query(..., description="Network element primary key"),
+    current_user: User = Depends(get_current_active_user)
+):
+    """Fetch DHCP clients for a specific appliance (requires authentication)"""
     url = f"{BASE_API_URL}/dhcpConfig/leases?nePk={nePk}"
     data = make_api_request(url)
     return Clients(clients=data)

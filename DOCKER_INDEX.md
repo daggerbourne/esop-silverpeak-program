@@ -4,6 +4,14 @@
 
 ## 🚀 Quick Navigation
 
+### ⚠️ Start Here - Configuration
+
+**[📝 Configuration Guide](CONFIGURATION_GUIDE.md)** - **READ THIS FIRST!**
+- Confused about what file to edit?
+- Where do API keys go?
+- Where do I change ports?
+- **Answer: Edit `.env` file ONLY - never docker-compose.yml!**
+
 ### For Complete Beginners
 
 1. **[5-Minute Quick Start](DOCKER_5MIN_GUIDE.md)** ⭐ START HERE!

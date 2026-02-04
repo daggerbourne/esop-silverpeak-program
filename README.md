@@ -23,15 +23,24 @@ Choose your learning path:
 - **✅ Configuration** - [Setup Checklist](DOCKER_SETUP.md) - Verify your setup
 - **🔧 Advanced** - [Port Configuration](DOCKER_PORTS.md) - Customize ports
 
-**TL;DR - Deploy in 5 commands:**
+**TL;DR - Deploy in 3 steps:**
 ```bash
 # Install Docker, then:
-cp .env.example .env          # 1. Create config
-# (edit .env with your API credentials)
-mv docker-compose.example.yml docker-compose.yml  # 2. Rename compose file
-docker-compose up -d          # 3. Start everything
+
+# 1. Create and edit .env (ALL YOUR CONFIGURATION GOES HERE)
+cp .env.example .env
+notepad .env  # Add your BASE_API_URL, API_KEY, and optionally ports
+
+# 2. Rename docker-compose file (DON'T EDIT THIS FILE - just rename it)
+mv docker-compose.example.yml docker-compose.yml
+
+# 3. Start everything (Docker reads settings from .env automatically)
+docker-compose up -d
+
 # Open http://localhost:5173
 ```
+
+**⚠️ Configuration Rule:** Edit `.env` file ONLY - never edit docker-compose.yml!
 
 ### Option 2: Manual Installation (Development)
 

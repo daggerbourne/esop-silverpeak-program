@@ -118,6 +118,14 @@ cd esop-silverpeak-program
 
 ### Step 3: Configure the Application
 
+**⚠️ IMPORTANT: ALL configuration goes in the `.env` file ONLY!**
+
+You will:
+- ✅ Edit the `.env` file (this has all your settings)
+- ❌ NOT edit `docker-compose.yml` (just rename it, don't touch it)
+
+#### A. Create and Edit .env File
+
 On the target machine, create your environment configuration:
 
 ```bash
@@ -132,21 +140,36 @@ cp .env.example .env
 # Linux: nano .env
 ```
 
-**Edit `.env` and set these REQUIRED values:**
+**Edit `.env` and set these values:**
 
 ```bash
-# Your SilverPeak API Configuration
+# ============================================
+# REQUIRED - Your SilverPeak API Configuration
+# ============================================
 BASE_API_URL=https://your-silverpeak-url.com/api/v1
 API_KEY=your_actual_api_token_here
 
-# Port Configuration (change if needed)
+# ============================================
+# OPTIONAL - Port Configuration
+# ============================================
+# Only change these if default ports are in use
 BACKEND_PORT=8000
 FRONTEND_PORT=5173
 
-# Security (IMPORTANT: Change for production!)
+# ============================================
+# OPTIONAL - Security Configuration
+# ============================================
+# Change these for production!
 SECRET_KEY=generate_a_new_random_secret_key_here
 DEFAULT_ADMIN_PASSWORD=ChangeThisPassword123!
 ```
+
+**Where to edit ports:** Right here in `.env` - change `BACKEND_PORT` and `FRONTEND_PORT`  
+**Where to edit API keys:** Right here in `.env` - change `BASE_API_URL` and `API_KEY`
+
+#### B. Rename Docker Compose File (Do Not Edit!)
+
+The `docker-compose.yml` file automatically reads from `.env` - you don't need to edit it!
 
 **Generate a secure SECRET_KEY:**
 

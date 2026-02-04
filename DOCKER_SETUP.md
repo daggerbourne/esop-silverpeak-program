@@ -10,6 +10,21 @@ Follow these steps to configure and run the application with Docker.
 
 ## Configuration Steps
 
+### ⚠️ Important: Where to Configure Everything
+
+**You ONLY edit the `.env` file!**
+- ✅ **DO:** Edit `.env` file (all your settings)
+- ❌ **DON'T:** Edit `docker-compose.yml` (it reads from .env automatically)
+- ❌ **DON'T:** Edit `docker-compose.example.yml` (just rename it)
+
+**To change ports:** Edit `BACKEND_PORT` and `FRONTEND_PORT` in `.env`  
+**To change API keys:** Edit `BASE_API_URL` and `API_KEY` in `.env`  
+**To change passwords:** Edit `DEFAULT_ADMIN_PASSWORD` in `.env`
+
+Everything else happens automatically!
+
+---
+
 ### 1. Create Environment File
 
 ```bash
@@ -19,7 +34,7 @@ cp .env.example .env
 
 ### 2. Configure Required API Credentials
 
-Edit `.env` and set these **REQUIRED** values:
+Edit `.env` (Windows: `notepad .env`, Linux: `nano .env`) and set these **REQUIRED** values:
 
 ```bash
 # Get these from your SilverPeak SD-WAN administrator

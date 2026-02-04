@@ -12,8 +12,13 @@ Copy `esop-silverpeak-program` folder to target machine
 ### 3. Configure
 ```bash
 cd esop-silverpeak-program
+
+# Step A: Create and edit .env (ALL YOUR SETTINGS GO HERE)
 cp .env.example .env
-# Edit .env: Add BASE_API_URL and API_KEY
+notepad .env  # or nano .env on Linux
+# Add: BASE_API_URL, API_KEY, and optionally BACKEND_PORT, FRONTEND_PORT
+
+# Step B: Rename docker-compose file (DON'T EDIT IT)
 mv docker-compose.example.yml docker-compose.yml
 ```
 
